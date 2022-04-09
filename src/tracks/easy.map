@@ -1,0 +1,26 @@
+15
+l 10
+10
+ft
+15
+r 3
+7
+ft
+20
+jump
+15
+jump
+15
+jump
+15
+l 8
+10
+jump
+5
+ft
+20
+down 0.1
+20
+jump
+3
+end
