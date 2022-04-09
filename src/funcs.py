@@ -60,13 +60,33 @@ def getready():
 	son["racestart"].play()
 	son["racestart2"].play()
 	return 0
+def ahead():
+	yr=yb.split(" ")
+	match yr[0]:
+		case "jump":
+			son["speshel1"].play()
+		case "end":
+			son["combodone"].play()
+		case "l":
+			son["locked"].pan=-100
+			son["locked"].play()
+		case "r":
+			son["locked"].pan=100
+			son["locked"].play()
+		case "down":
+			if float(yr[1])>0.02:son["boost"].play()
+
+
+
+	lucia.output.speak(map.meen(yb)+" ahead!")
+
 
 def gameloop():
 	global ex
 	if ex:
-		lucia.output.speak("you are now up on a big hill. your skees are fixed with a rope. and they will release your skees in a few seconds. get ready.")
 		theload=map.load()
 		if theload==2:return mainmenu()
+		lucia.output.speak("you are now up on a big hill. your skees are fixed with a rope. and they will release your skees in a few seconds. get ready.")
 	jump.pause()
 	son["amb"].play_looped()
 	ready=getready()
@@ -113,7 +133,7 @@ def gameloop():
 			timer.restart()
 			y+=1
 			ya-=1
-			if ya==10:lucia.output.speak(map.meen(yb)+" ahead!")
+			if ya==10:ahead()
 			if ya<=5 and yb!="ft" and yb!="end":
 				if yb[0]=="l":
 					son["flag"].pan=-100
@@ -137,11 +157,11 @@ def gameloop():
 						son["trickboost"].play()
 				case "r":
 					turning=int(yc[1])
-					son["trickloop"].pan=-100
+					son["trickloop"].pan=100
 					son["trickloop"].play()
 				case "l":
 					turning=-int(yc[1])
-					son["trickloop"].pan=100
+					son["trickloop"].pan=-100
 					son["trickloop"].play()
 				case "ft":
 					turning=0
@@ -152,6 +172,7 @@ def gameloop():
 
 
 			ya,yb=map.next()
+			if ya>0 and ya<10:ahead()
 
 		if ya==0:
 			son["sliding"].stop()
